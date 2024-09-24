@@ -1,6 +1,4 @@
-streamlit
-Pillow
-pytesseract
-transformers
+streamlit>=1.10
 torch
-opencv-python
+transformers
+Pillow
