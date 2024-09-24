@@ -4,7 +4,7 @@ from PIL import Image
 import pytesseract
 
 # Setting the path to the Tesseract executable
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
 # Loading an image from local machine
 image = Image.open("C:\\Users\\tomar\\OneDrive\\Documents\\hin_img.jpg")
