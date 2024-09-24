@@ -1,51 +1,45 @@
-import re
 import streamlit as st
 from PIL import Image
-import pytesseract
+from ocr import extract_text  # Import your OCR function from ocr.py
+import re
 
-# Setting up Tesseract path
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
-
-# Function to perform OCR on an image
-def extract_text_from_image(image):
-    return pytesseract.image_to_string(image, lang='hin+eng')
-
-
-# Function to highlight keywords in the extracted text
-def highlight_keywords(text, keyword):
-    # Escaping keyword to handle special characters in regex
-    escaped_keyword = re.escape(keyword)
-    # Highlighting the keyword by wrapping it with HTML bold tags
-    highlighted_text = re.sub(f"({escaped_keyword})", r"<mark>\1</mark>", text, flags=re.IGNORECASE)
+# Function to highlight the keyword in the text
+def highlight_text(text, keyword):
+    # Using regex to wrap the keyword with a <span> tag for highlighting
+    highlighted_text = re.sub(f'({keyword})', r'<mark>\1</mark>', text, flags=re.IGNORECASE)
     return highlighted_text
 
+st.title("OCR with Keyword Search")
+st.write("Upload an image with text in both Hindi and English, and search for keywords.")
 
-# Streamlit App
-st.title("OCR and Keyword Search")
+# File uploader
+image_file = st.file_uploader("Upload an image", type=["jpeg", "jpg", "png"])
 
-# Uploading image
-uploaded_image = st.file_uploader("Upload an image containing Hindi and English text", type=['jpg', 'jpeg', 'png'])
+if image_file:
+    # Display the uploaded image
+    img = Image.open(image_file)
+    st.image(img, caption="Uploaded Image", use_column_width=True)
 
-if uploaded_image is not None:
-    # Loading and displaying the image
-    image = Image.open(uploaded_image)
-    st.image(image, caption='Uploaded Image', use_column_width=True)
+    # Extract text using the OCR function
+    extracted_text = extract_text(image_file)
 
-    # Extracting text from the image
-    extracted_text = extract_text_from_image(image)
+    # Display extracted text
+    st.write("Extracted Text:")
+    st.text_area("Extracted Text", extracted_text, height=300)
 
-    # Displaying the extracted text
-    st.subheader("Extracted Text")
-    st.write(extracted_text)
+    # Search bar below the extracted text
+    keyword = st.text_input("Enter a keyword to search")
 
-    # Keyword search
-    keyword = st.text_input("Enter a keyword to search in the extracted text")
-
+    # If a keyword is entered, perform the search
     if keyword:
-        # Highlighting the keyword in the extracted text
-        highlighted_result = highlight_keywords(extracted_text, keyword)
+        # Highlight the keyword in the extracted text
+        highlighted_text = highlight_text(extracted_text, keyword)
 
-        # Displaying the highlighted result as HTML
-        st.subheader("Search Results")
-        st.markdown(f"<div>{highlighted_result}</div>", unsafe_allow_html=True)
+        # Display highlighted text using markdown with HTML rendering
+        st.markdown(f"<div style='font-size: 16px;'>{highlighted_text}</div>", unsafe_allow_html=True)
+
+        # Indicate whether the keyword was found or not
+        if re.search(keyword, extracted_text, re.IGNORECASE):
+            st.success(f"Keyword '{keyword}' found!")
+        else:
+            st.error(f"Keyword '{keyword}' not found.")
