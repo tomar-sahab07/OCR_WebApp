@@ -1,6 +1,9 @@
 # OCR and Keyword Search Web Application
 
 This project is a web-based prototype that allows users to perform Optical Character Recognition (OCR) on an uploaded image containing text in both Hindi and English, and provides a basic keyword search functionality. The application is accessible via a live URL.
+You can access the live application here:
+
+[Live URL]([https://your-live-url-here](https://ocrwebapp-njmr8chx7vt9wfwkol3xoq.streamlit.app/))
 
 ## Features
 
