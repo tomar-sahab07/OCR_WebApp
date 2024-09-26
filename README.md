@@ -7,26 +7,26 @@ This project is a web-based prototype that allows users to perform Optical Chara
 - Upload an image (JPEG, PNG) containing text.
 - Perform OCR to extract both Hindi and English text from the image.
 - Search for keywords in the extracted text and highlight them.
+- Supports filtering out Hindi digits, keeping only Hindi characters when detecting Hindi text.
 
 ## Technologies Used
 
 - Python
 - Streamlit (for web interface)
-- Tesseract OCR (for text extraction)
-- PyTesseract (Python wrapper for Tesseract)
+- **EasyOCR** (for text extraction)
 - Pillow (for image handling)
+- Regular Expressions (for filtering Hindi digits and highlighting text)
 
 ## Installation
 
 ### Prerequisites
 - Python 3.x
-- Tesseract installed on your system [https://github.com/tesseract-ocr/tesseract](https://github.com/tesseract-ocr/tesseract)
 
 ### Steps
 
 1. **Clone this repository**:
    ```bash
-   git clone https://github.com/your-repo-url.git
+   git clone [https://github.com/your-repo-url.git](https://github.com/tomar-sahab07/OCR_WebApp)
    
 2. **Navigate to the project directory**:
    ```bash
@@ -46,19 +46,12 @@ This project is a web-based prototype that allows users to perform Optical Chara
 4. **Install the required dependencies**:
      ```bash
      pip install -r requirements.txt
-   
-5. **Set up Tesseract OCR**:
-   - Download and install Tesseract from [here](https://github.com/tesseract-ocr/tesseract/wiki).
-   - Set the Tesseract path in your code:
-     ```python 
-     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-     ```
      
-6. **Run the Streamlit web application**:
+5. **Run the Streamlit web application**:
    ```bash
    streamlit run app.py
 
-7. **Access the application**:
+6. **Access the application**:
       - Open the following URL in your browser: [http://localhost:8501](http://localhost:8501)
 
 
@@ -66,6 +59,15 @@ This project is a web-based prototype that allows users to perform Optical Chara
 1. Upload an image containing text in both Hindi and English.
 2. The extracted text will be displayed on the screen.
 3. Enter a keyword in the search box to highlight matching words in the extracted text.
+
+## Dependencies
+
+- **Python**: Programming language used to write the application.
+- **Streamlit**: Framework for building web apps in Python.
+- **EasyOCR**: OCR tool for extracting text from images.
+- **Pillow**: Image processing library used to handle image uploads.
+- **Regular Expressions**: For searching and highlighting keywords within extracted text.
+
 
 ## Deployment
 The application can be deployed using platforms like Streamlit Sharing, Hugging Face, or any other suitable platform.
